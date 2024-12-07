@@ -1,0 +1,32 @@
+CREATE TABLE Users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    google_id VARCHAR(255),
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    created_at DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Rides (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT FOREIGN KEY REFERENCES Users(id),
+    from_location VARCHAR(255),
+    to_location VARCHAR(255),
+    ride_date DATETIME,
+    seats_available INT,
+    price DECIMAL(10,2)
+);
+
+CREATE TABLE Bookings (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    ride_id INT FOREIGN KEY REFERENCES Rides(id),
+    user_id INT FOREIGN KEY REFERENCES Users(id),
+    booking_date DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Payments (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT FOREIGN KEY REFERENCES Users(id),
+    amount DECIMAL(10,2),
+    payment_date DATETIME DEFAULT GETDATE()
+);
