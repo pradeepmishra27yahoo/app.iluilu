@@ -1,9 +1,7 @@
 CREATE TABLE Users (
     id INT IDENTITY(1,1) PRIMARY KEY,
     google_id VARCHAR(255),
-    name VARCHAR(255),
-    email VARCHAR(255),
-    password VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
     created_at DATETIME DEFAULT GETDATE()
 );
 
