@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iluilu - Social Login</title>
+</head>
+<body>
+    <h1>Welcome to iluilu</h1>
+    <div>
+        <h3>Login / Signup Simulation</h3>
+        <input type="email" id="email" placeholder="Enter your email">
+        <button onclick="loginUser()">Login/Signup</button>
+    </div>
+    <script>
+        async function loginUser() {
+            const email = document.getElementById('email').value;
+
+            if (!email) {
+                alert("Please enter an email.");
+                return;
+            }
+
+            const response = await fetch(`/login?email=${email}`);
+            const message = await response.text();
+            alert(message);
+        }
+    </script>
+</body>
+</html>
