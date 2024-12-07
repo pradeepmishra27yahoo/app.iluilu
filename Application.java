@@ -41,3 +41,11 @@ public class Application {
         return "Welcome back! You are logged in with email: " + email;
     }
 }
+@Controller
+public class FrontendController {
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+}
