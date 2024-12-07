@@ -142,3 +142,19 @@ public class Application {
         return "Ride successfully booked.";
     }
 }
+@PostMapping("/payments")
+public String processPayment(@RequestBody Map<String, Object> paymentDetails) {
+    String userEmail = (String) paymentDetails.get("email");
+    Integer rideId = (Integer) paymentDetails.get("rideId");
+    Double amount = Double.parseDouble(paymentDetails.get("amount").toString());
+
+    String userCheckQuery = "SELECT id FROM Users WHERE email = ?";
+    Integer userId = jdbcTemplate.queryForObject(userCheckQuery, new Object[]{userEmail}, Integer.class);
+
+    jdbcTemplate.update(
+            "INSERT INTO Payments (user_id, ride_id, amount) VALUES (?, ?, ?)",
+            userId, rideId, amount
+    );
+
+    return "Payment successful!";
+}
