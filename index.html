@@ -96,3 +96,27 @@
     </script>
 </body>
 </html>
+<div>
+    <h3>Make a Payment</h3>
+    <input id="paymentAmount" placeholder="Enter amount">
+    <input id="rideId" placeholder="Ride ID to pay for">
+    <button onclick="processPayment()">Pay Now</button>
+</div>
+
+<script>
+    async function processPayment() {
+        const paymentDetails = {
+            email: document.getElementById('email').value,
+            rideId: parseInt(document.getElementById('rideId').value),
+            amount: parseFloat(document.getElementById('paymentAmount').value),
+        };
+
+        const response = await fetch('/payments', {
+            method: 'POST',
+            body: JSON.stringify(paymentDetails),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        alert(await response.text());
+    }
+</script>
