@@ -26,3 +26,73 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iluilu - Ride Booking</title>
+</head>
+<body>
+    <h1>Welcome to iluilu - Social Login & Rides</h1>
+    <hr>
+    <!-- Login Section -->
+    <div>
+        <input type="email" id="email" placeholder="Enter your email">
+        <button onclick="loginUser()">Login</button>
+    </div>
+    <hr>
+
+    <!-- Publish Ride Section -->
+    <div>
+        <h3>Publish a Ride</h3>
+        <input id="fromLocation" placeholder="From">
+        <input id="toLocation" placeholder="To">
+        <input id="rideDate" placeholder="Ride Date (e.g., 2024-12-20)">
+        <input id="seatsAvailable" placeholder="Seats">
+        <input id="price" placeholder="Price">
+        <button onclick="publishRide()">Publish Ride</button>
+    </div>
+    <hr>
+
+    <!-- Fetch Available Rides Section -->
+    <div>
+        <h3>Available Rides</h3>
+        <button onclick="fetchRides()">View Rides</button>
+        <div id="ridesContainer"></div>
+    </div>
+
+    <script>
+        async function loginUser() {
+            const email = document.getElementById('email').value;
+            const response = await fetch(`/login?email=${email}`);
+            alert(await response.text());
+        }
+
+        async function publishRide() {
+            const rideDetails = {
+                email: document.getElementById('email').value,
+                fromLocation: document.getElementById('fromLocation').value,
+                toLocation: document.getElementById('toLocation').value,
+                rideDate: document.getElementById('rideDate').value,
+                seatsAvailable: parseInt(document.getElementById('seatsAvailable').value),
+                price: parseFloat(document.getElementById('price').value),
+            };
+            const response = await fetch('/rides/publish', {
+                method: 'POST',
+                body: JSON.stringify(rideDetails),
+                headers: { "Content-Type": "application/json" },
+            });
+            alert(await response.text());
+        }
+
+        async function fetchRides() {
+            const response = await fetch('/rides');
+            const rides = await response.json();
+            const container = document.getElementById('ridesContainer');
+            container.innerHTML = '<h4>Available Rides:</h4>';
+            rides.forEach(ride => {
+                container.innerHTML += `<p>${ride.from_location} → ${ride.to_location} on ${ride.ride_date}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
