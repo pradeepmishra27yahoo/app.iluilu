@@ -28,3 +28,12 @@ CREATE TABLE Payments (
     amount DECIMAL(10,2),
     payment_date DATETIME DEFAULT GETDATE()
 );
+CREATE TABLE Payments (
+    payment_id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT NOT NULL,
+    ride_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_date DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (ride_id) REFERENCES Rides(id)
+);
